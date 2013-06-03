@@ -1,0 +1,2 @@
+PostgreSQL needs to be installed in the root xampp folder in a folder named pgsql.
+See postgresql.conf.sample for configuration information for data folders and logging.
