@@ -710,7 +710,7 @@ end;
 procedure TfMain.bPostgreSQLConfigClick(Sender: TObject);
 begin
   GeneralPUClear;
-  GeneralPUAdd('my.ini', 'pgsql\bin\my.ini');//fix path
+  GeneralPUAdd('postgresql.conf', 'pgsql\data\postgresql.conf');
   GeneralPUAddUserFromSL(Config.UserConfig.PostgreSQL);
   GeneralPUAdd();
   GeneralPUAdd(_('<Browse>'), 'pgsql', 1);
@@ -720,10 +720,10 @@ end;
 procedure TfMain.bPostgreSQLLogsClick(Sender: TObject);
 begin
   GeneralPUClear;
-  GeneralPUAdd('mysql_error.log', 'pgsql\data\mysql_error.log');//fix path
+  GeneralPUAdd('postgresql.log', 'pgsql\data\pg_log\postgresql.log');
   GeneralPUAddUserFromSL(Config.UserLogs.PostgreSQL);
   GeneralPUAdd();
-  GeneralPUAdd(_('<Browse>'), 'pgsql\data', 1);//fix path
+  GeneralPUAdd(_('<Browse>'), 'pgsql\data\pg_log', 1);
   puGeneral.Popup(Mouse.CursorPos.X, Mouse.CursorPos.Y);
 end;
 

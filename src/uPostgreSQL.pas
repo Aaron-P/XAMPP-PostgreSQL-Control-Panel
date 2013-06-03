@@ -31,7 +31,7 @@ const // cServiceName = 'postgresql';
 
 procedure tPostgreSQL.AddLog(Log: string; LogType: tLogType);
 begin
-  inherited AddLog('postgresql', Log, LogType);
+  inherited AddLog('pgsql', Log, LogType);//postgresql
 end;
 
 procedure tPostgreSQL.Admin;
@@ -80,7 +80,7 @@ begin
       AddLog(_('Change XAMPP PostgreSQL settings or'), ltError);
       AddLog(_('Uninstall/disable the other service manually first'), ltError);
       AddLog(Format(_('Found Path: %s'), [Path]), ltError);
-      AddLog(Format(_('Expected Path: %spgsql\bin\%s --defaults-file=%smysql\bin\my.ini %s'), [basedir, Config.BinaryNames.PostgreSQL, basedir, Config.ServiceNames.PostgreSQL]), ltError);
+      AddLog(Format(_('Expected Path: %spgsql\bin\%s --config-file=%spgsql\data\postgresql.conf %s'), [basedir, Config.BinaryNames.PostgreSQL, basedir, Config.ServiceNames.PostgreSQL]), ltError);
     end
   end
   else
@@ -170,15 +170,16 @@ var
   App, Param: string;
   RC: Integer;
 begin//change to postgres service install command line
-  App := '"' + basedir + 'pgsql\bin\' + Config.BinaryNames.PostgreSQL + '"';
-  Param := '--install "' + Config.ServiceNames.PostgreSQL + '" --defaults-file="' + basedir + 'mysql\bin\my.ini"';
-  AddLog(_('Installing service...'));
-  AddLog(Format(_('Executing %s %s'), [App, Param]), ltDebug);
-  RC := RunAsAdmin(App, Param, SW_HIDE);
-  if RC = 0 then
-    AddLog(Format(_('Return code: %d'), [RC]), ltDebug)
-  else
-    AddLog(Format(_('There may be an error, return code: %d - %s'), [RC, SystemErrorMessage(RC)]), ltError);
+//Check http://www.postgresql.org/docs/9.1/static/app-pg-ctl.html, disable service install for now.
+//  App := '"' + basedir + 'pgsql\bin\' + Config.BinaryNames.PostgreSQL + '"';
+//  Param := '--install "' + Config.ServiceNames.PostgreSQL + '" --config-file="' + basedir + 'pgsql\data\postgresql.conf"';
+//  AddLog(_('Installing service...'));
+//  AddLog(Format(_('Executing %s %s'), [App, Param]), ltDebug);
+//  RC := RunAsAdmin(App, Param, SW_HIDE);
+//  if RC = 0 then
+//    AddLog(Format(_('Return code: %d'), [RC]), ltDebug)
+//  else
+//    AddLog(Format(_('There may be an error, return code: %d - %s'), [RC, SystemErrorMessage(RC)]), ltError);
 end;
 
 procedure tPostgreSQL.ServiceUnInstall;
@@ -186,15 +187,16 @@ var
   App, Param: string;
   RC: Cardinal;
 begin//change to postgres service uninstall command line
-  App := basedir + 'pgsql\bin\' + Config.BinaryNames.PostgreSQL;
-  Param := '--remove "' + Config.ServiceNames.PostgreSQL + '"';
-  AddLog('Uninstalling service...');
-  AddLog(Format(_('Executing %s %s'), [App, Param]), ltDebug);
-  RC := RunAsAdmin(App, Param, SW_HIDE);
-  if RC = 0 then
-    AddLog(Format(_('Return code: %d'), [RC]), ltDebug)
-  else
-    AddLog(Format(_('There may be an error, return code: %d - %s'), [RC, SystemErrorMessage(RC)]), ltError);
+//Check http://www.postgresql.org/docs/9.1/static/app-pg-ctl.html, disable service install for now.
+//  App := basedir + 'pgsql\bin\' + Config.BinaryNames.PostgreSQL;
+//  Param := '--remove "' + Config.ServiceNames.PostgreSQL + '"';
+//  AddLog('Uninstalling service...');
+//  AddLog(Format(_('Executing %s %s'), [App, Param]), ltDebug);
+//  RC := RunAsAdmin(App, Param, SW_HIDE);
+//  if RC = 0 then
+//    AddLog(Format(_('Return code: %d'), [RC]), ltDebug)
+//  else
+//    AddLog(Format(_('There may be an error, return code: %d - %s'), [RC, SystemErrorMessage(RC)]), ltError);
 end;
 
 procedure tPostgreSQL.Start;
@@ -203,7 +205,8 @@ var
   RC: Cardinal;
 begin
   GlobalStatus := 'starting';
-  if isService then
+//  if isService then
+  if False then
   begin
     AddLog(Format(_('Attempting to start %s service...'), [cModuleName]));
     App := Format('start "%s"', [Config.ServiceNames.PostgreSQL]);
@@ -220,7 +223,8 @@ begin
   else
   begin
     AddLog(Format(_('Attempting to start %s app...'), [cModuleName]));
-    App := '"' + basedir + 'pgsql\bin\' + Config.BinaryNames.PostgreSQL + '" --defaults-file="' + basedir + 'mysql\bin\my.ini" --standalone';
+//    App := '"' + basedir + 'pgsql\bin\' + Config.BinaryNames.PostgreSQL + '" --config-file="' + basedir + 'pgsql\data\postgresql.conf"';//Does postgres.exe have an equivolent to mysql's --standalone?
+    App := '"' + basedir + 'pgsql\bin\' + Config.BinaryNames.PostgreSQLControl + '" start -D "' + basedir + 'pgsql\data\"';//Does postgres.exe have an equivolent to mysql's --standalone?
     AddLog(Format(_('Executing "%s"'), [App]), ltDebug);
     RC := RunProcess(App, SW_HIDE, false);
     if RC = 0 then
@@ -240,7 +244,8 @@ var
   RC: Cardinal;
 begin
   GlobalStatus := 'stopping';
-  if isService then
+//  if isService then
+  if False then
   begin
     AddLog(Format(_('Attempting to stop %s service...'), [cModuleName]));
     App := Format('stop "%s"', [Config.ServiceNames.PostgreSQL]);
@@ -258,26 +263,37 @@ begin
   begin
     if PIDList.Count > 0 then
     begin
-      for i := 0 to PIDList.Count - 1 do
+
+      App := '"' + basedir + 'pgsql\bin\' + Config.BinaryNames.PostgreSQLControl + '" stop -D "' + basedir + 'pgsql\data\"';
+      AddLog(_('Attempting to stop') + ' ' + cModuleName);
+      RC := RunProcess(App, SW_HIDE, false);
+
+      if RC <> 0 then
       begin
-        pPID := Integer(PIDList[i]);
-        AddLog(_('Attempting to stop') + ' ' + cModuleName + ' ' + Format('(PID: %d)', [pPID]));
-        if not TerminateProcessByID(pPID) then
-        begin
-          AddLog(Format(_('Problem killing PID %d'), [pPID]), ltError);
-          AddLog(_('Check that you have the proper privileges'), ltError);
-        end;
-//        App := Format(basedir + 'apache\bin\pv.exe -f -k -q -i %d', [pPID]);
-//        AddLog(Format(_('Executing "%s"'), [App]), ltDebug);
-//        RC := RunProcess(App, SW_HIDE, false);
-//        if RC = 0 then
-//          AddLog(Format(_('Return code: %d'), [RC]), ltDebug)
-//        else
-//        begin
-//          AddLog(Format(_('There may be an error, return code: %d - %s'), [RC, SystemErrorMessage(RC)]), ltError);
-//          AddLog(Format(_('%s'), [SysUtils.SysErrorMessage(System.GetLastError)]), ltError);
-//        end;
+        AddLog(_('Problem killing process'), ltError);
+        AddLog(_('Check that you have the proper privileges'), ltError)
       end;
+
+//      for i := 0 to PIDList.Count - 1 do
+//      begin
+//        pPID := Integer(PIDList[i]);
+//        AddLog(_('Attempting to stop') + ' ' + cModuleName + ' ' + Format('(PID: %d)', [pPID]));
+//        if not TerminateProcessByID(pPID) then //This might be bad for PostgreSQL (http://www.postgresql.org/docs/8.2/static/app-postgres.html > NOTES), I'm not sure on windows.
+//        begin
+//          AddLog(Format(_('Problem killing PID %d'), [pPID]), ltError);
+//          AddLog(_('Check that you have the proper privileges'), ltError);
+//        end;
+////        App := Format(basedir + 'apache\bin\pv.exe -f -k -q -i %d', [pPID]);
+////        AddLog(Format(_('Executing "%s"'), [App]), ltDebug);
+////        RC := RunProcess(App, SW_HIDE, false);
+////        if RC = 0 then
+////          AddLog(Format(_('Return code: %d'), [RC]), ltDebug)
+////        else
+////        begin
+////          AddLog(Format(_('There may be an error, return code: %d - %s'), [RC, SystemErrorMessage(RC)]), ltError);
+////          AddLog(Format(_('%s'), [SysUtils.SysErrorMessage(System.GetLastError)]), ltError);
+////        end;
+//      end;
     end
     else
     begin
@@ -364,7 +380,7 @@ begin
         AddLog(_('Error: PostgreSQL shutdown unexpectedly.'), ltError);
         AddLog(_('This may be due to a blocked port, missing dependencies, '), ltError);
         AddLog(_('improper privileges, a crash, or a shutdown by another method.'), ltError);
-        AddLog(_('Check the "/xampp/postgresql/data/postgresql_error.log" file'), ltError);//change to proper path
+        AddLog(_('Check the "/xampp/pgsql/data/postgresql_error.log" file'), ltError);//change to proper path
         AddLog(_('and the Windows Event Viewer for more clues'), ltError);
       end;
     end;

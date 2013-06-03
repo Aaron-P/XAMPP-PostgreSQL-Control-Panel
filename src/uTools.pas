@@ -74,6 +74,7 @@ type
       Apache: string;
       MySQL: string;
       PostgreSQL: string;
+      PostgreSQLControl: string;
       FileZilla: string;
       FileZillaAdmin: string;
       Mercury: string;
@@ -219,6 +220,7 @@ begin
     Config.BinaryNames.Apache := mi.ReadString('BinaryNames', 'Apache', 'httpd.exe');
     Config.BinaryNames.MySQL := mi.ReadString('BinaryNames', 'MySQL', 'mysqld.exe');
     Config.BinaryNames.PostgreSQL := mi.ReadString('BinaryNames', 'PostgreSQL', 'postgres.exe');//is this right?
+    Config.BinaryNames.PostgreSQLControl := mi.ReadString('BinaryNames', 'PostgreSQLControl', 'pg_ctl.exe');//is this right?
     Config.BinaryNames.FileZilla := mi.ReadString('BinaryNames', 'FileZilla', 'filezillaserver.exe');
     Config.BinaryNames.FileZillaAdmin := mi.ReadString('BinaryNames', 'FileZillaAdmin', 'filezilla server interface.exe');
     Config.BinaryNames.Mercury := mi.ReadString('BinaryNames', 'Mercury', 'mercury.exe');
@@ -318,6 +320,7 @@ begin
     mi.WriteString('BinaryNames', 'Apache', Config.BinaryNames.Apache);
     mi.WriteString('BinaryNames', 'MySQL', Config.BinaryNames.MySQL);
     mi.WriteString('BinaryNames', 'PostgreSQL', Config.BinaryNames.PostgreSQL);
+    mi.WriteString('BinaryNames', 'PostgreSQLControl', Config.BinaryNames.PostgreSQLControl);
     mi.WriteString('BinaryNames', 'FileZilla', Config.BinaryNames.FileZilla);
     mi.WriteString('BinaryNames', 'FileZillaAdmin', Config.BinaryNames.FileZillaAdmin);
     mi.WriteString('BinaryNames', 'Mercury', Config.BinaryNames.Mercury);

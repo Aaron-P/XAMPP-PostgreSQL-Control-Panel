@@ -1566,7 +1566,7 @@ object fMain: TfMain
       Margins.Bottom = 4
       Caption = 'Logs'
       TabOrder = 12
-      OnClick = bPostgreSQLLogsClick
+      OnClick = bMySQLLogsClick
     end
     object bFileZillaConfig: TBitBtn
       Left = 473
@@ -1659,7 +1659,7 @@ object fMain: TfMain
       Margins.Right = 4
       Margins.Bottom = 4
       TabOrder = 19
-      OnClick = bPostgreSQLServiceClick
+      OnClick = bMySQLServiceClick
     end
     object bFileZillaService: TBitBtn
       Left = 21
@@ -3171,7 +3171,7 @@ object fMain: TfMain
     Left = 188
     Top = 309
     Bitmap = {
-      494C010111003000880110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C010111003000900110001000FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       0000000000003600000028000000400000005000000001002000000000000050
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
