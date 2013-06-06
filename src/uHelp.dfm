@@ -2,12 +2,12 @@ object fHelp: TfHelp
   Left = 356
   Top = 94
   Caption = 'Help'
-  ClientHeight = 230
+  ClientHeight = 253
   ClientWidth = 417
   Color = clBtnFace
-  Constraints.MaxHeight = 268
+  Constraints.MaxHeight = 291
   Constraints.MaxWidth = 433
-  Constraints.MinHeight = 268
+  Constraints.MinHeight = 291
   Constraints.MinWidth = 433
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -19,7 +19,7 @@ object fHelp: TfHelp
   OnCreate = FormCreate
   DesignSize = (
     417
-    230)
+    253)
   PixelsPerInch = 96
   TextHeight = 14
   object lblMainProg: TLabel
@@ -40,8 +40,8 @@ object fHelp: TfHelp
     ParentFont = False
   end
   object lblSecondProg: TLabel
-    Left = 8
-    Top = 35
+    Left = 9
+    Top = 34
     Width = 247
     Height = 23
     Margins.Left = 4
@@ -58,7 +58,7 @@ object fHelp: TfHelp
   end
   object lblHelpEng: TLabel
     Left = 8
-    Top = 73
+    Top = 96
     Width = 324
     Height = 18
     Margins.Left = 4
@@ -75,7 +75,7 @@ object fHelp: TfHelp
   end
   object lblHelpGer: TLabel
     Left = 8
-    Top = 126
+    Top = 149
     Width = 329
     Height = 18
     Margins.Left = 4
@@ -92,7 +92,7 @@ object fHelp: TfHelp
   end
   object lblHelpEngLink: TLabel
     Left = 7
-    Top = 98
+    Top = 121
     Width = 333
     Height = 17
     Caption = 'http://www.apachefriends.org/f/viewforum.php?f=16'
@@ -106,7 +106,7 @@ object fHelp: TfHelp
   end
   object lblHelpGerLink: TLabel
     Left = 7
-    Top = 151
+    Top = 174
     Width = 325
     Height = 17
     Caption = 'http://www.apachefriends.org/f/viewforum.php?f=4'
@@ -118,9 +118,26 @@ object fHelp: TfHelp
     ParentFont = False
     OnClick = lblHelpGerLinkClick
   end
+  object lblThirdProg: TLabel
+    Left = 9
+    Top = 57
+    Width = 319
+    Height = 23
+    Margins.Left = 4
+    Margins.Top = 4
+    Margins.Right = 4
+    Margins.Bottom = 4
+    Caption = 'PostgreSQL Support by Aaron Papp'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Arial'
+    Font.Style = []
+    ParentFont = False
+  end
   object bHelpClose: TBitBtn
     Left = 316
-    Top = 187
+    Top = 210
     Width = 86
     Height = 28
     Margins.Left = 4
@@ -131,10 +148,11 @@ object fHelp: TfHelp
     Caption = 'Close'
     TabOrder = 0
     OnClick = bHelpCloseClick
+    ExplicitTop = 187
   end
   object bReadMe: TButton
     Left = 196
-    Top = 187
+    Top = 210
     Width = 100
     Height = 28
     Caption = 'View ReadMe'

@@ -17,6 +17,7 @@ type
     lblHelpEngLink: TLabel;
     lblHelpGerLink: TLabel;
     bReadMe: TButton;
+    lblThirdProg: TLabel;
     procedure bHelpCloseClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure lblHelpEngLinkClick(Sender: TObject);

@@ -8,6 +8,7 @@
   Updates:
   3.0.2: May 10th 2011, Steffen Strueber
   3.0.3-3.1.0: May 12th 2012, hackattack142
+  PostgreSQL support: June 6th 2013, Aaron Papp
 *)
 
 unit uMain;
@@ -1010,11 +1011,13 @@ begin
   GeneralPUAdd('Apache (httpd-xampp.conf)', 'apache/conf/extra/httpd-xampp.conf');
   GeneralPUAdd('PHP (php.ini)', 'php/php.ini');
   GeneralPUAdd('phpMyAdmin (config.inc.php)', 'phpMyAdmin/config.inc.php');
+  GeneralPUAdd('phpPgAdmin (config.inc.php)', 'phpPgAdmin/conf/config.inc.php');
   GeneralPUAddUserFromSL(Config.UserConfig.Apache);
   GeneralPUAdd();
   GeneralPUAdd(_('<Browse>') + ' [Apache]', 'apache', 1);
   GeneralPUAdd(_('<Browse>') + ' [PHP]', 'php', 1);
   GeneralPUAdd(_('<Browse>') + ' [phpMyAdmin]', 'phpMyAdmin', 1);
+  GeneralPUAdd(_('<Browse>') + ' [phpPgAdmin]', 'phpPgAdmin', 1);
   puGeneral.Popup(Mouse.CursorPos.X, Mouse.CursorPos.Y);
 end;
 
