@@ -41,7 +41,7 @@ begin
   if Config.ServicePorts.Apache = 80 then
     Param := 'http://localhost/phppgadmin/'
   else
-    Param := 'http://localhost:' + IntToStr(Config.ServicePorts.Apache) + '/phppgadmin';
+    Param := 'http://localhost:' + IntToStr(Config.ServicePorts.Apache) + '/phppgadmin/';
   if Config.BrowserApp <> '' then
   begin
     App := Config.BrowserApp;

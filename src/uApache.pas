@@ -46,9 +46,9 @@ var
 begin
   inherited;
   if Config.ServicePorts.Apache = 80 then
-    Param := 'http://localhost/'
+    Param := 'http://localhost/phpliteadmin/'
   else
-    Param := 'http://localhost:' + IntToStr(Config.ServicePorts.Apache) + '/';
+    Param := 'http://localhost:' + IntToStr(Config.ServicePorts.Apache) + '/phpliteadmin/';
   if Config.BrowserApp <> '' then
   begin
     App := Config.BrowserApp;
