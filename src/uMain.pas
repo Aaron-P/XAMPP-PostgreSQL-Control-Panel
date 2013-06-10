@@ -1012,12 +1012,14 @@ begin
   GeneralPUAdd('PHP (php.ini)', 'php/php.ini');
   GeneralPUAdd('phpMyAdmin (config.inc.php)', 'phpMyAdmin/config.inc.php');
   GeneralPUAdd('phpPgAdmin (config.inc.php)', 'phpPgAdmin/conf/config.inc.php');
+  GeneralPUAdd('phpLiteAdmin (phpliteadmin.php)', 'phpLiteAdmin/phpliteadmin.php');
   GeneralPUAddUserFromSL(Config.UserConfig.Apache);
   GeneralPUAdd();
   GeneralPUAdd(_('<Browse>') + ' [Apache]', 'apache', 1);
   GeneralPUAdd(_('<Browse>') + ' [PHP]', 'php', 1);
   GeneralPUAdd(_('<Browse>') + ' [phpMyAdmin]', 'phpMyAdmin', 1);
   GeneralPUAdd(_('<Browse>') + ' [phpPgAdmin]', 'phpPgAdmin', 1);
+  GeneralPUAdd(_('<Browse>') + ' [phpLiteAdmin]', 'phpLiteAdmin', 1);
   puGeneral.Popup(Mouse.CursorPos.X, Mouse.CursorPos.Y);
 end;
 
